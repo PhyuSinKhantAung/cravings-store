@@ -3,24 +3,19 @@ import { SignUpFormValues } from "@/app/components/auth/SignupForm";
 import prisma from "@/lib/prisma";
 
 export const getUserByEmail = async (email: string) => {
-  console.log("here i reached");
   const user = await prisma.user.findUnique({
     where: {
       email,
     },
   });
 
-  console.log({ user });
-
   return user;
 };
 
 export type SignupState =
   | {
-      id: number;
-      name: string;
-      email: string;
-      password: string;
+      status: string;
+      message: string;
     }
   | null
   | undefined;
@@ -38,10 +33,23 @@ export const signup = async (
 
     if (user) throw new Error("User already existed");
 
-    return await prisma.user.create({
+    await prisma.user.create({
       data: payload,
     });
+    return {
+      status: "success",
+      message: "User created",
+    };
   } catch (error) {
-    console.log(error);
+    const status = "error";
+    let message = "Something went wrong";
+    if (error instanceof Error) {
+      console.error(error.stack);
+      message = error.message;
+    }
+    return {
+      status,
+      message,
+    };
   }
 };
