@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/ui/Navbar";
 import Headbar from "./components/ui/Headbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Snacks Store",
@@ -18,12 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={montserrat.className}>
         <Headbar />
 
         <Navbar />
 
-        <main className="px-10">{children}</main>
+        <main className="lg:px-10 px-4">{children}</main>
       </body>
     </html>
   );
