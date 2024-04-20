@@ -1,0 +1,14 @@
+version: "4.2"
+services:
+  dev-db:
+    image: postgres:13
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: pska
+      POSTGRES_PASSWORD: P!@ssw0rD
+      POSTGRES_DB: mydb
+    networks:
+      - snacksstore
+networks:
+  snacksstore:
