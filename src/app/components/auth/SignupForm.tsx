@@ -7,7 +7,7 @@ import { SignupSchemaType, signupSchema } from "@/app/validations/auth";
 import { useFormState, useFormStatus } from "react-dom";
 
 import { State, signup } from "@/app/actions";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { signIn } from "../../../auth";
 
@@ -24,7 +24,6 @@ const SignupForm = () => {
   const [pending, startTransaction] = useTransition();
 
   useEffect(() => {
-    console.log({ state }, "hiiiiiiii");
     if (!state) {
       return;
     }

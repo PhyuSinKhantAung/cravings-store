@@ -23,26 +23,14 @@ const LoginForm = () => {
 
   const [pending, startTransaction] = useTransition();
 
-  const { data: session, status } = useSession();
-  console.log({ user: session?.user });
-
   useEffect(() => {
-    console.log({ state }, "heyyyyyyy");
     if (!state) {
       return;
     }
     if (state.status === "error") {
       toast.error(`${state.message}`);
     }
-
-    if (session?.user) {
-      redirect("/");
-    }
-    if (state.status === "success") {
-      console.log("pls redirect");
-      redirect("/");
-    }
-  }, [state, session]);
+  }, [state]);
 
   return (
     <form

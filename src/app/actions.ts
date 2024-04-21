@@ -66,13 +66,8 @@ export async function authenticate(
 ) {
   try {
     await signIn("credentials", formData);
-    return {
-      status: "success",
-      message: "Login successfully",
-    };
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log("here catch");
       let state = {
         status: "error",
         message: "Something went wrong",

@@ -24,10 +24,7 @@ export const authConfig = {
           return false;
         }
       } else if (isLoggedIn && nextUrl.pathname === "/login") {
-        const url = nextUrl.clone();
-        url.pathname = "/";
-        return NextResponse.rewrite(url);
-        // return NextResponse.rewrite(new URL("/menus", url));
+        return Response.redirect(new URL("/", nextUrl));
       }
 
       return true;
