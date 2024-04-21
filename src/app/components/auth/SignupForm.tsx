@@ -6,30 +6,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchemaType, signupSchema } from "@/app/validations/auth";
 import { useFormState, useFormStatus } from "react-dom";
 
-import { SignupState, signup } from "@/app/actions";
+import { State, signup } from "@/app/actions";
 import toast, { Toaster } from "react-hot-toast";
 import { redirect } from "next/navigation";
-import { signIn } from "../../../../auth";
-export interface SignUpFormValues {
-  name: string;
-  email: string;
-  password: string;
-}
+import { signIn } from "../../../auth";
 
 const SignupForm = () => {
   const {
     register,
     formState: { errors, isValid },
-    getValues,
   } = useForm<SignupSchemaType>({
     resolver: zodResolver(signupSchema),
     mode: "all",
   });
-  const [state, formAction] = useFormState<SignupState, FormData>(signup, null);
+  const [state, formAction] = useFormState<State, FormData>(signup, null);
 
   const [pending, startTransaction] = useTransition();
 
   useEffect(() => {
+    console.log({ state }, "hiiiiiiii");
     if (!state) {
       return;
     }
@@ -49,12 +44,9 @@ const SignupForm = () => {
             formAction(formData);
             await signIn("credentials", formData);
           }
-          // if (state?.status === "success") {
-          // }
         });
       }}
     >
-      <Toaster position="top-center" reverseOrder={false} />
       <FormContent register={register} errors={errors}></FormContent>
     </form>
   );
@@ -65,7 +57,7 @@ export const FormContent = ({
   errors,
 }: {
   register: UseFormRegister<SignupSchemaType>;
-  errors: FieldErrors<SignUpFormValues>;
+  errors: FieldErrors<SignupSchemaType>;
 }) => {
   const { pending } = useFormStatus();
 

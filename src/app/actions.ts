@@ -1,7 +1,9 @@
 "use server";
-import { SignUpFormValues } from "@/app/components/auth/SignupForm";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { SignupSchemaType } from "./validations/auth";
+import { AuthError } from "next-auth";
+import { signIn } from "../auth";
 
 export const getUserByEmail = async (email: string) => {
   const user = await prisma.user.findUnique({
@@ -13,7 +15,7 @@ export const getUserByEmail = async (email: string) => {
   return user;
 };
 
-export type SignupState =
+export type State =
   | {
       status: string;
       message: string;
@@ -22,13 +24,13 @@ export type SignupState =
   | undefined;
 
 export const signup = async (
-  prevState: SignupState | null,
+  prevState: State | null,
   data: FormData
-): Promise<SignupState> => {
+): Promise<State> => {
   try {
     const payload = {
       ...Object.fromEntries(data),
-    } as unknown as SignUpFormValues;
+    } as unknown as SignupSchemaType;
 
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(payload.password, saltRounds);
@@ -57,3 +59,32 @@ export const signup = async (
     };
   }
 };
+
+export async function authenticate(
+  prevState: State | undefined,
+  formData: FormData
+) {
+  try {
+    await signIn("credentials", formData);
+    return {
+      status: "success",
+      message: "Login successfully",
+    };
+  } catch (error) {
+    if (error instanceof AuthError) {
+      console.log("here catch");
+      let state = {
+        status: "error",
+        message: "Something went wrong",
+      };
+      switch (error.type) {
+        case "CredentialsSignin":
+          state.message = "Invalid credentails";
+          return state;
+        default:
+          return state;
+      }
+    }
+    throw error;
+  }
+}

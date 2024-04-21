@@ -22,3 +22,19 @@ export const signupSchema = zfd.formData({
 });
 
 export type SignupSchemaType = z.infer<typeof signupSchema>;
+
+export const loginSchema = zfd.formData({
+  email: zfd.text(
+    z
+      .string({ required_error: "email is required" })
+      .email()
+      .min(1, { message: "email is required" })
+  ),
+  password: zfd.text(
+    z
+      .string({ required_error: "password is required" })
+      .min(6, { message: "Password is too short, mininum 6 characters" })
+  ),
+});
+
+export type LoginSchemaType = z.infer<typeof loginSchema>;
