@@ -8,6 +8,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/app/actions";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const LoginForm = () => {
   const {
@@ -22,6 +23,9 @@ const LoginForm = () => {
 
   const [pending, startTransaction] = useTransition();
 
+  const { data: session, status } = useSession();
+  console.log({ user: session?.user });
+
   useEffect(() => {
     console.log({ state }, "heyyyyyyy");
     if (!state) {
@@ -30,11 +34,15 @@ const LoginForm = () => {
     if (state.status === "error") {
       toast.error(`${state.message}`);
     }
+
+    if (session?.user) {
+      redirect("/");
+    }
     if (state.status === "success") {
       console.log("pls redirect");
       redirect("/");
     }
-  }, [state]);
+  }, [state, session]);
 
   return (
     <form
