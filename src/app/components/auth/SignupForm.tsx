@@ -9,7 +9,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { SignupState, signup } from "@/app/actions";
 import toast, { Toaster } from "react-hot-toast";
 import { redirect } from "next/navigation";
-
+import { signIn } from "../../../../auth";
 export interface SignUpFormValues {
   name: string;
   email: string;
@@ -44,10 +44,13 @@ const SignupForm = () => {
   return (
     <form
       action={(formData) => {
-        startTransaction(() => {
+        startTransaction(async () => {
           if (isValid) {
             formAction(formData);
+            await signIn("credentials", formData);
           }
+          // if (state?.status === "success") {
+          // }
         });
       }}
     >

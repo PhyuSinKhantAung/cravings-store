@@ -1,6 +1,7 @@
 "use server";
 import { SignUpFormValues } from "@/app/components/auth/SignupForm";
 import prisma from "@/lib/prisma";
+import bcrypt from "bcrypt";
 
 export const getUserByEmail = async (email: string) => {
   const user = await prisma.user.findUnique({
@@ -29,12 +30,15 @@ export const signup = async (
       ...Object.fromEntries(data),
     } as unknown as SignUpFormValues;
 
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(payload.password, saltRounds);
+
     const user = await getUserByEmail(payload.email);
 
     if (user) throw new Error("User already existed");
 
     await prisma.user.create({
-      data: payload,
+      data: { ...payload, password: hashedPassword },
     });
     return {
       status: "success",
