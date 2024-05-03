@@ -21,7 +21,6 @@ export const { auth, signIn, signOut } = NextAuth({
           const user = await getUserByEmail(email);
           if (!user) return null;
           const isValidPassword = await bcrypt.compare(password, user.password);
-          console.log({ isValidPassword, user });
           if (!isValidPassword) return null;
           return user as any;
         }
@@ -44,6 +43,7 @@ export const { auth, signIn, signOut } = NextAuth({
         session.user.id = token.id;
         session.user.email = token.email;
       }
+      console.log({ session });
       return session;
     },
     async redirect({ url, baseUrl }: any) {

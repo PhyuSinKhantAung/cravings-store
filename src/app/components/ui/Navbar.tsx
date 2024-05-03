@@ -18,7 +18,7 @@ const Navbar = () => {
     return null;
   } else
     return (
-      <div className="navbar bg-primary px-4 lg:px-10">
+      <div className="navbar bg-primary px-4 lg:px-10 xl:px-20">
         <div className="navbar-start text-secondary">
           <div className="dropdown">
             <div tabIndex={0} className="lg:hidden btn btn-ghost" role="button">

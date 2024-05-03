@@ -22,8 +22,8 @@ export const bestSellerBurgers = [
 
 const HomePage = () => {
   return (
-    <div>
-      <div className=" max-w-full">
+    <div className="xl:px-10">
+      <div className="xl:max-w-screen-2xl max-w-full">
         <div className="lg:flex lg:my-10 my-5">
           <div className="py-5 lg:mr-20">
             <h1 className="prose font-bold text-7xl">
