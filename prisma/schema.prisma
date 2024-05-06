@@ -19,3 +19,18 @@ model User {
   email    String @unique
   password String
 }
+
+model Menu {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  price       Int
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  menus Menu[]
+}
