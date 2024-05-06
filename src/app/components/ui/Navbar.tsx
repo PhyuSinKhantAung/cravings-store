@@ -1,19 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import checkAuthPage from "@/utils/checkAuthPage";
+import { User } from "next-auth";
 
-const links = [
+const homeLinks = [
   { href: "/", label: "home" },
   { href: "/about", label: "about" },
   { href: "/menus", label: "menus" },
   { href: "/cart", label: "cart" },
 ];
 
-const Navbar = () => {
+const additionalLinks = [
+  { href: "/check-out", label: "checkout" },
+  { href: "/orders", label: "orders" },
+];
+
+const Navbar = ({ user }: { user: User | null }) => {
   const pathname = usePathname();
+
+  console.log({ user, homeLinks });
+
   if (checkAuthPage(pathname)) {
     return null;
   } else
@@ -43,7 +52,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 text-neutral rounded-box w-52"
             >
-              {links.map((link) => {
+              {homeLinks.map((link) => {
                 return (
                   <li
                     key={link.href}
@@ -57,6 +66,21 @@ const Navbar = () => {
                   </li>
                 );
               })}
+              {user &&
+                additionalLinks.map((link) => {
+                  return (
+                    <li
+                      key={link.href}
+                      className={`${
+                        link.href === pathname && "text-secondary font-semibold"
+                      }`}
+                    >
+                      <Link href={link.href} className=" capitalize">
+                        {link.label}
+                      </Link>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
           <Image
@@ -70,7 +94,7 @@ const Navbar = () => {
 
         <div className="navbar-center text-white hidden lg:flex">
           <ul className="menu menu-horizontal md:ml-8">
-            {links.map((link) => {
+            {homeLinks.map((link) => {
               return (
                 <li
                   key={link.href}
@@ -84,6 +108,21 @@ const Navbar = () => {
                 </li>
               );
             })}
+            {user &&
+              additionalLinks.map((link) => {
+                return (
+                  <li
+                    key={link.href}
+                    className={`${
+                      link.href === pathname && "text-secondary font-semibold"
+                    }`}
+                  >
+                    <Link href={link.href} className=" capitalize">
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
           </ul>
         </div>
 

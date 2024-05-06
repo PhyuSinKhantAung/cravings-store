@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 export const bestSellerBurgers = [
   {
@@ -20,12 +21,17 @@ export const bestSellerBurgers = [
   },
 ];
 
-const HomePage = () => {
+const HomePage = async () => {
+  const session = await auth();
+
+  if (!session?.user) {
+    console.log({ session }, "~~~~");
+  }
   return (
-    <div className="xl:px-10">
-      <div className="xl:max-w-screen-2xl max-w-full">
-        <div className="lg:flex lg:my-10 my-5">
-          <div className="py-5 lg:mr-20">
+    <div className="xl:px-10 ">
+      <div className="xl:max-w-screen-4xl max-w-full">
+        <div className="lg:flex lg:my-10 xl:my-28 my-5 items-center">
+          <div className="py-5 lg:mr-20 xl:text-3xl">
             <h1 className="prose font-bold text-7xl">
               Eat burger live happier
             </h1>
@@ -45,7 +51,7 @@ const HomePage = () => {
               width={400}
               height={400}
               alt="burger"
-              className="rounded-3xl"
+              className="rounded-3xl xl:w-[48rem]"
             ></Image>
           </div>
         </div>

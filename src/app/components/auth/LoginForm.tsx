@@ -7,8 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/app/actions";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const LoginForm = () => {
   const {
@@ -62,9 +60,6 @@ export const FormContent = ({
 
       <div className="card-body grid gap-y-8">
         <div>
-          <span className="text-red-600 text-sm p-1">
-            {errors?.email?.message}
-          </span>
           <input
             type="text"
             placeholder="Enter your email"
@@ -72,11 +67,11 @@ export const FormContent = ({
             required
             {...register("email")}
           />
+          <span className="text-red-600 text-sm p-1">
+            {errors?.email?.message}
+          </span>
         </div>
         <div>
-          <span className="text-red-600 text-sm p-1">
-            {errors?.password?.message}
-          </span>
           <input
             type="password"
             placeholder="Enter your password"
@@ -84,6 +79,9 @@ export const FormContent = ({
             required
             {...register("password")}
           />
+          <span className="text-red-600 text-sm p-1">
+            {errors?.password?.message}
+          </span>
         </div>
         <div className="grid gap-y-4">
           <button className="btn btn-primary w-full" type="submit">
