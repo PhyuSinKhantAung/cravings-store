@@ -3,7 +3,7 @@ import React from "react";
 
 const Dropdown = ({ children }: React.PropsWithChildren) => {
   return (
-    <details className="dropdown">
+    <details className="dropdown lg:hidden">
       <summary className="m-1 btn">
         {" "}
         <svg
@@ -22,7 +22,9 @@ const Dropdown = ({ children }: React.PropsWithChildren) => {
         </svg>
         Category
       </summary>
-      {children}
+      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+        {children}
+      </ul>
     </details>
   );
 };

@@ -4,6 +4,7 @@ import MenusList from "../components/menus/MenusList";
 import SearchInput from "../components/ui/SearchInput";
 import Dropdown from "../components/ui/Dropdown";
 import CategoriesList from "../components/category/CategoriesList";
+import Tabs from "../components/ui/Tabs";
 
 type SearchParams = {
   page?: string | undefined;
@@ -18,14 +19,19 @@ const MenusPage = async ({ searchParams }: { searchParams: SearchParams }) => {
     search: searchParams?.search || "",
   };
   return (
-    <div className="container mx-auto my-5">
-      <div className="lg:max-w-md w-full my-6">
+    <div className="w-full my-5 lg:flex lg:gap-x-5">
+      <div className="lg:w-1/6 my-6 flex flex-col gap-y-3">
         <SearchInput />
         <Dropdown>
           <CategoriesList />
         </Dropdown>
+        <Tabs>
+          <CategoriesList />
+        </Tabs>
       </div>
-      <MenusList query={query} />
+      <div className="lg:w-4/5">
+        <MenusList query={query} />
+      </div>
     </div>
   );
 };

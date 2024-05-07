@@ -14,13 +14,13 @@ export const fetchCategories = async () => {
 const CategoriesList = async () => {
   const { data } = await fetchCategories();
   return (
-    <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+    <>
       {data.map((item: CategoryData) => (
-        <li key={item.id}>
-          <a>{item.name}</a>
+        <li key={item.id} className="lg:list-none ">
+          <a className="lg:tab lg:text-xs">{item.name}</a>
         </li>
       ))}
-    </ul>
+    </>
   );
 };
 
