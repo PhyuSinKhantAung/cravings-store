@@ -1,26 +1,31 @@
 "use server";
-import prisma from "@/lib/prisma";
-
-import { Menu } from "@prisma/client";
 import React from "react";
-import MenuCard from "../components/ui/MenuCard";
+import MenusList from "../components/menus/MenusList";
+import SearchInput from "../components/ui/SearchInput";
+import Dropdown from "../components/ui/Dropdown";
+import CategoriesList from "../components/category/CategoriesList";
 
-export async function fetchMenus() {
-  const menus = await prisma.menu.findMany({});
+type SearchParams = {
+  page?: string | undefined;
+  limit?: string | undefined;
+  search?: string | undefined;
+};
 
-  return {
-    data: menus,
+const MenusPage = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const query = {
+    page: searchParams?.page || "1",
+    limit: searchParams?.limit || "10",
+    search: searchParams?.search || "",
   };
-}
-const MenusPage = async () => {
-  const { data } = await fetchMenus();
   return (
     <div className="container mx-auto my-5">
-      <div className="grid gap-2 lg:grid-cols-3 lg:gap-5 md:grid-cols-2">
-        {data.map((menu: Menu) => (
-          <MenuCard item={menu} key={menu.id} />
-        ))}
+      <div className="lg:max-w-md w-full my-6">
+        <SearchInput />
+        <Dropdown>
+          <CategoriesList />
+        </Dropdown>
       </div>
+      <MenusList query={query} />
     </div>
   );
 };
