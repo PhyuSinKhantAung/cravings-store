@@ -30,8 +30,8 @@ const HomePage = async () => {
   return (
     <div className="xl:px-10 ">
       <div className="xl:max-w-screen-4xl max-w-full">
-        <div className="lg:flex lg:my-10 xl:my-28 my-5 items-center">
-          <div className="py-5 lg:mr-20 xl:text-3xl">
+        <div className="lg:flex lg:my-10 xxl:my-28 my-5 items-center">
+          <div className="py-5 lg:mr-20 xxl:text-3xl lg:text-base">
             <h1 className="prose font-bold text-7xl">
               Eat burger live happier
             </h1>
@@ -51,7 +51,7 @@ const HomePage = async () => {
               width={400}
               height={400}
               alt="burger"
-              className="rounded-3xl xl:w-[48rem]"
+              className="rounded-3xl xl:w-[40rem]"
             ></Image>
           </div>
         </div>
