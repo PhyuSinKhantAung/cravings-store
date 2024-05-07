@@ -15,10 +15,12 @@ export async function fetchMenus() {
 const MenusPage = async () => {
   const { data } = await fetchMenus();
   return (
-    <div>
-      {data.map((menu: Menu) => (
-        <MenuCard item={menu} key={menu.id} />
-      ))}
+    <div className="container mx-auto my-5">
+      <div className="grid gap-2 lg:grid-cols-3 lg:gap-5 md:grid-cols-2">
+        {data.map((menu: Menu) => (
+          <MenuCard item={menu} key={menu.id} />
+        ))}
+      </div>
     </div>
   );
 };

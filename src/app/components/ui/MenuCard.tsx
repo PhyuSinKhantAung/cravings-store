@@ -8,10 +8,10 @@ const MenuCard = ({ item }: { item: Menu }) => {
     <div className="card bg-base-100 shadow-xl" key={item.id}>
       <figure className="px-10 pt-10">
         <Image
-          src={""}
+          src={item.image}
           width={600}
           height={60}
-          alt="cheese-burger"
+          alt="burger"
           className="rounded-xl"
         ></Image>
       </figure>

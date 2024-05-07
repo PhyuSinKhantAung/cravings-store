@@ -5,6 +5,8 @@ import { faker } from "@faker-js/faker";
 
 async function main() {
   try {
+    await prisma.category.deleteMany();
+
     const fakeCategories = randProductCategory({ length: 10 });
     const fakeMenus = randFood({ length: 40 });
 
@@ -18,6 +20,11 @@ async function main() {
                 title: item,
                 description: faker.lorem.paragraph(),
                 price: Number(faker.commerce.price()),
+                image: faker.image.urlLoremFlickr({
+                  width: 600,
+                  height: 440,
+                  category: "burger",
+                }),
               };
             }),
           },
