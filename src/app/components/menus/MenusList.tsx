@@ -8,6 +8,7 @@ type GetMenuQuery = {
   page?: string | undefined;
   limit?: string | undefined;
   search?: string | undefined;
+  category?: string | undefined;
 };
 
 export async function fetchMenus(rawQuery: GetMenuQuery) {
@@ -16,19 +17,17 @@ export async function fetchMenus(rawQuery: GetMenuQuery) {
   const skip = page > 0 ? limit * (page - 1) : 0;
 
   const query: Prisma.MenuFindManyArgs = {
-    // where: {
-    //   title: rawQuery.search,
-    // },
+    where: {
+      // title: rawQuery.search,
+      ...(rawQuery?.category ? { categoryId: Number(rawQuery.category) } : {}),
+    },
     take: limit,
     skip,
   };
 
   const [menus, count] = await Promise.all([
     prisma.menu.findMany(query),
-    prisma.menu
-      .count
-      //   { where: query.where }
-      (),
+    prisma.menu.count({ where: query.where }),
   ]);
 
   const pagination = {
@@ -47,8 +46,6 @@ export async function fetchMenus(rawQuery: GetMenuQuery) {
 
 const MenusList = async ({ query }: { query: GetMenuQuery }) => {
   const { data, pagination } = await fetchMenus(query);
-
-  console.log({ pagination });
 
   return (
     <div>

@@ -1,4 +1,3 @@
-"use server";
 import React from "react";
 import MenusList from "../components/menus/MenusList";
 import SearchInput from "../components/ui/SearchInput";
@@ -10,6 +9,7 @@ type SearchParams = {
   page?: string | undefined;
   limit?: string | undefined;
   search?: string | undefined;
+  category?: string | undefined;
 };
 
 const MenusPage = async ({ searchParams }: { searchParams: SearchParams }) => {
@@ -17,6 +17,7 @@ const MenusPage = async ({ searchParams }: { searchParams: SearchParams }) => {
     page: searchParams?.page || "1",
     limit: searchParams?.limit || "10",
     search: searchParams?.search || "",
+    category: searchParams?.category || "",
   };
   return (
     <div className="w-full my-5 lg:flex lg:gap-x-5">

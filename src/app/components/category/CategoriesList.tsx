@@ -1,9 +1,7 @@
 import prisma from "@/lib/prisma";
 import React from "react";
-type CategoryData = {
-  id: number;
-  name: string;
-};
+import CategoryTag from "./CategoryTag";
+import { Category } from "@prisma/client";
 
 export const fetchCategories = async () => {
   const categories = await prisma.category.findMany();
@@ -11,13 +9,15 @@ export const fetchCategories = async () => {
     data: categories,
   };
 };
+
 const CategoriesList = async () => {
   const { data } = await fetchCategories();
+
   return (
     <>
-      {data.map((item: CategoryData) => (
+      {data.map((item: Category) => (
         <li key={item.id} className="lg:list-none ">
-          <a className="lg:tab lg:text-xs">{item.name}</a>
+          <CategoryTag category={item} />
         </li>
       ))}
     </>
