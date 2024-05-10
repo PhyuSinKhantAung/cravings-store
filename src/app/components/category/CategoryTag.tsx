@@ -20,7 +20,7 @@ const CategoryTag = ({ category }: { category: Category }) => {
       className={`lg:tab lg:text-xs ${
         category.id.toString() === searchParams.get("category") &&
         "tab-active font-bold"
-      }`}
+      } ${category.name === "all" && "tab-active font-bold"}`}
       onClick={() => {
         handleMenusByCategory(category.id);
       }}

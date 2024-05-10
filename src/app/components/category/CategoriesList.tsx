@@ -13,8 +13,16 @@ export const fetchCategories = async () => {
 const CategoriesList = async () => {
   const { data } = await fetchCategories();
 
+  const all = {
+    id: 0,
+    name: "All",
+  };
+
   return (
     <>
+      <li className="lg:list-none">
+        <CategoryTag category={all} />
+      </li>
       {data.map((item: Category) => (
         <li key={item.id} className="lg:list-none ">
           <CategoryTag category={item} />

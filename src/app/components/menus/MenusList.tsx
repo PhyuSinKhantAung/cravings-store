@@ -22,7 +22,9 @@ export async function fetchMenus(rawQuery: GetMenuQuery) {
         contains: rawQuery.search,
         mode: "insensitive",
       },
-      ...(rawQuery?.category ? { categoryId: Number(rawQuery.category) } : {}),
+      ...(Number(rawQuery?.category)
+        ? { categoryId: Number(rawQuery.category) }
+        : {}),
     },
     take: limit,
     skip,
