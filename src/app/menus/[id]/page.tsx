@@ -17,17 +17,17 @@ const SingleMenuPage = async ({ params }: { params: { id: number } }) => {
   const menu = await getSingleMenuById(Number(params.id));
 
   return (
-    <div className="w-full my-6 lg:flex max-w-4xl lg:justify-between">
-      <div className="lg:w-3/4 pb-10">
+    <div className="w-full my-10 lg:my-20 lg:flex max-w-6xl lg:justify-center lg:mx-auto md:gap-10">
+      <div className="lg:w-3/5 pb-10">
         <Image
           src={`${menu?.image}`}
           width={600}
           height={400}
           alt={""}
-          className="rounded-2xl"
+          className="rounded-2xl lg:mx-auto"
         ></Image>
       </div>
-      <div className="lg:w-1/4 flex flex-col">
+      <div className="lg:w-2/5 flex flex-col ">
         <div className="flex items-end justify-between">
           <h1 className="text-4xl font-semibold prose">{menu?.title}</h1>
           <span className="font-bold">Price - {menu?.price} $</span>
@@ -41,7 +41,7 @@ const SingleMenuPage = async ({ params }: { params: { id: number } }) => {
           placeholder="Add your request"
           className="py-2 px-1 border-b border-b-prose focus:outline-none"
         />
-        <div className="join py-10">
+        <div className="join py-8">
           <button className="join-item btn">-</button>
           <span className="join-item flex justify-center items-center p-2 px-6">
             1

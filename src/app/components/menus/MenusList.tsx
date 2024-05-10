@@ -18,7 +18,10 @@ export async function fetchMenus(rawQuery: GetMenuQuery) {
 
   const query: Prisma.MenuFindManyArgs = {
     where: {
-      // title: rawQuery.search,
+      title: {
+        contains: rawQuery.search,
+        mode: "insensitive",
+      },
       ...(rawQuery?.category ? { categoryId: Number(rawQuery.category) } : {}),
     },
     take: limit,
