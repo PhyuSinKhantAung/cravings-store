@@ -1,7 +1,6 @@
-import MenuCard from "@/app/components/ui/MenuCard";
 import prisma from "@/lib/prisma";
 import React from "react";
-import Image from "next/image";
+import SingleMenu from "@/app/components/menus/SingleMenu";
 export const getSingleMenuById = async (menuId: number) => {
   const menu = await prisma.menu.findUnique({
     where: {
@@ -17,42 +16,7 @@ const SingleMenuPage = async ({ params }: { params: { id: number } }) => {
   const menu = await getSingleMenuById(Number(params.id));
 
   return (
-    <div className="w-full my-10 lg:my-20 lg:flex max-w-6xl lg:justify-center lg:mx-auto md:gap-10">
-      <div className="lg:w-3/5 pb-10">
-        <Image
-          src={`${menu?.image}`}
-          width={600}
-          height={400}
-          alt={""}
-          className="rounded-2xl lg:mx-auto"
-        ></Image>
-      </div>
-      <div className="lg:w-2/5 flex flex-col ">
-        <div className="flex items-end justify-between">
-          <h1 className="text-4xl font-semibold prose">{menu?.title}</h1>
-          <span className="font-bold">Price - {menu?.price} $</span>
-        </div>
-        <p className="py-8 text-accent">{menu?.description}</p>
-        <label htmlFor="" className="italic">
-          Note to restaurant (optional)
-        </label>
-        <input
-          type="text"
-          placeholder="Add your request"
-          className="py-2 px-1 border-b border-b-prose focus:outline-none"
-        />
-        <div className="join py-8">
-          <button className="join-item btn">-</button>
-          <span className="join-item flex justify-center items-center p-2 px-6">
-            1
-          </span>
-          <button className="join-item btn">+</button>
-        </div>
-        <div>
-          <button className="btn btn-primary w-full">Add to cart</button>
-        </div>
-      </div>
-    </div>
+    <>{menu ? <SingleMenu menu={menu} /> : <p>Item is not avaliable</p>}</>
   );
 };
 

@@ -5,6 +5,7 @@ import Navbar from "./components/ui/Navbar";
 import Headbar from "./components/ui/Headbar";
 import { Toaster } from "react-hot-toast";
 import { auth } from "@/auth";
+import StoreProvider from "./providers/StoreProvider";
 // import AuthProvider from "./providers/AuthProvider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -21,16 +22,18 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en">
-      <body className={montserrat.className}>
-        <Toaster position="top-center" reverseOrder={false} />
+    <StoreProvider>
+      <html lang="en">
+        <body className={montserrat.className}>
+          <Toaster position="top-center" reverseOrder={false} />
 
-        <Headbar user={session?.user ?? null} />
+          <Headbar user={session?.user ?? null} />
 
-        <Navbar user={session?.user ?? null} />
+          <Navbar user={session?.user ?? null} />
 
-        <main className="lg:px-10 px-4">{children}</main>
-      </body>
-    </html>
+          <main className="lg:px-10 px-4">{children}</main>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
