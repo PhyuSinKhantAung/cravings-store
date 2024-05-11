@@ -1,26 +1,23 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import counterSlice from "./features/counter/counter.slice";
 import cartSlice from "./features/cart/cart.slice";
-
-const rootReducer = combineReducers({
-  counter: counterSlice.reducer,
-  cart: cartSlice.reducer,
-});
-
-const persistedState = localStorage.getItem("reduxState")!
-  ? JSON.parse(localStorage.getItem("reduxState")!)
-  : null;
-
-let preloadedState = null;
-
-if (persistedState) {
-  preloadedState = persistedState;
-}
+import { persistedState } from "@/app/components/cart/Cart";
 
 export const makeStore = () => {
+  const rootReducer = combineReducers({
+    counter: counterSlice.reducer,
+    cart: cartSlice.reducer,
+  });
+
+  let preloadedState = null;
+
+  if (persistedState) {
+    preloadedState = persistedState;
+  }
+
   const store = configureStore({
     reducer: rootReducer,
-    preloadedState,
+    ...(preloadedState ? { preloadedState } : {}),
   });
 
   store.subscribe(() => {
