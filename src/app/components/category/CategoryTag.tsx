@@ -42,6 +42,7 @@ const CategoryTag = ({ category }: { category: Category }) => {
       onClick={() => {
         handleMenusByCategory(category.id);
       }}
+      key={category.id}
     >
       {category.name}
     </a>

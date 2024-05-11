@@ -18,7 +18,7 @@ const Cart = () => {
     <div className="my-5 xl:container xl:mx-auto px-10">
       {cart.items.map((item: CartMenuItem) => {
         return (
-          <div className="mb-4">
+          <div className="mb-4" key={item.id}>
             <div className="grid grid-cols-3 items-center gap-x-4">
               <div>
                 <Image
