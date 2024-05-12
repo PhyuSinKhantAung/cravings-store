@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "docker compose up dev-db -d && next dev",
     "build": "npx prisma generate && next build",
-    "start": "next start",
+    "start": "docker compose up dev-db -d && next start",
     "lint": "next lint"
   },
   "dependencies": {
