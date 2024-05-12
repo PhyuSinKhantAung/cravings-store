@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "docker compose up dev-db -d && next dev",
+    "dev": "next dev",
     "build": "npx prisma generate && next build",
-    "start": "docker compose up dev-db -d && next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {

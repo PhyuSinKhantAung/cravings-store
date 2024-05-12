@@ -9,25 +9,25 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(sequence())
   name     String
   email    String @unique
   password String
 }
 
 model Category {
-  id    Int    @id @default(autoincrement())
+  id    Int    @id @default(sequence())
   name  String
   menus Menu[]
 }
 
 model Menu {
-  id          Int      @id @default(autoincrement())
+  id          Int      @id @default(sequence())
   title       String
   description String
   price       Int
