@@ -32,10 +32,10 @@ const HomePage = async () => {
       <div className="xl:max-w-screen-4xl max-w-full">
         <div className="lg:flex lg:my-10 xxl:my-28 my-5 items-center">
           <div className="py-5 lg:mr-20 xxl:text-3xl lg:text-base">
-            <h1 className="prose font-bold text-7xl">
+            <h1 className="prose font-bold lg:text-6xl xxl:text-7xl text-5xl">
               Eat burger live happier
             </h1>
-            <p className="py-6">
+            <p className="py-6 text-sm text-accent lg:text-base">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
               fugit, maiores sint illo esse odit soluta voluptas doloremque
               pariatur minus velit illum ad dicta qui dignissimos! Similique

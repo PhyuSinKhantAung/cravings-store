@@ -15,7 +15,11 @@ const Cart = () => {
   console.log({ cartItems: cart.items });
 
   return (
-    <div className="my-5 xl:container xl:mx-auto px-10">
+    <div className="my-5 xl:container xl:mx-auto xl:px-10 px-2">
+      <div className="my-8">
+        <h1 className="text-4xl text-prose font-semibold">Your Cart</h1>
+        <div className="w-12 h-1 bg-accent"></div>
+      </div>
       {cart.items.map((item: CartMenuItem) => {
         return (
           <div className="mb-4" key={item.id}>
@@ -40,7 +44,7 @@ const Cart = () => {
                   </small>
                 )}
               </div>
-              <div className="ml-10">
+              <div className="mx-10">
                 <div className="join">
                   {/* <div>Quantity</div> */}
                   <button
@@ -66,12 +70,16 @@ const Cart = () => {
           </div>
         );
       })}
-      <div className="bg-red-50 flex flex-col p-5 rounded-md text-sm gap-5 items-center">
-        <span>Subtotal - {cart.totalAmount} $</span>
-        <span>Delivery - 5 $</span>
-        <span> Total Amount - {cart.totalAmount + 5} $</span>
-      </div>
-      <button className="btn btn-primary w-full my-4">Check out</button>
+      {cart.items.length !== 0 && (
+        <div>
+          <div className="bg-red-50 flex flex-col p-5 rounded-md text-sm gap-5 items-center">
+            <span>Subtotal - {cart.totalAmount} $</span>
+            <span>Delivery - 5 $</span>
+            <span> Total Amount - {cart.totalAmount + 5} $</span>
+          </div>
+          <button className="btn btn-primary w-full my-4">Check out</button>
+        </div>
+      )}
     </div>
   );
 };
