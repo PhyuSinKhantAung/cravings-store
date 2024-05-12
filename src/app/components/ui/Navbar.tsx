@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import checkAuthPage from "@/utils/checkAuthPage";
 import { User } from "next-auth";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 const homeLinks = [
   { href: "/", label: "home" },
@@ -21,7 +22,7 @@ const additionalLinks = [
 const Navbar = ({ user }: { user: User | null }) => {
   const pathname = usePathname();
 
-  console.log({ user, homeLinks });
+  const cartQuantityCount = useAppSelector((state) => state.cart.totalQuantity);
 
   if (checkAuthPage(pathname)) {
     return null;
@@ -146,8 +147,8 @@ const Navbar = ({ user }: { user: User | null }) => {
                 <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
               </svg>
 
-              <div className="badge badge-accent badge-xs absolute -top-1 -right-2">
-                0
+              <div className="badge badge-accent p-1.5 badge-xs absolute -top-1 -right-2 font-semibold">
+                {cartQuantityCount}
               </div>
             </Link>
           </div>

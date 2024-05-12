@@ -8,7 +8,7 @@ const checkCurrentPageIsActivePage = (
   searchParamsCategoryId: string | null
 ) => {
   if (categoryId.toString() === searchParamsCategoryId) {
-    if (categoryId === 0) return true;
+    if (categoryId === 0 || !categoryId) return true;
     return true;
   } else {
     return false;
@@ -30,8 +30,10 @@ const CategoryTag = ({ category }: { category: Category }) => {
   };
 
   useEffect(() => {
-    setCategoryId(searchParams.get("category"));
-  }, [searchParams.get("category")]);
+    setCategoryId(
+      searchParams.get("category") ? searchParams.get("category") : "0"
+    );
+  }, [searchParams]);
 
   return (
     <a
