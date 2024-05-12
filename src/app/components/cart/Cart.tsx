@@ -1,8 +1,12 @@
 "use client";
-import { CartMenuItem } from "@/lib/redux/features/cart/cart.slice";
-import { useAppSelector } from "@/lib/redux/hooks";
+import {
+  CartMenuItem,
+  addItemToCart,
+  removeItemFromCart,
+} from "@/lib/redux/features/cart/cart.slice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 
 export const persistedState =
   typeof window !== "undefined" && localStorage.getItem("reduxState")!
@@ -12,7 +16,13 @@ export const persistedState =
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
 
-  console.log({ cartItems: cart.items });
+  console.log({
+    cartItems: cart.items,
+    totalAmount: cart.totalAmount,
+    totalQuantity: cart.totalQuantity,
+  });
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="my-5 xl:container xl:mx-auto xl:px-10 px-2">
@@ -49,7 +59,12 @@ const Cart = () => {
                   {/* <div>Quantity</div> */}
                   <button
                     onClick={() => {
-                      // dispatch(decrement());
+                      dispatch(
+                        removeItemFromCart({
+                          ...item,
+                          // quantity: item.quantity - 1,
+                        })
+                      );
                     }}
                     className="join-item btn btn-xs"
                   >
@@ -58,7 +73,12 @@ const Cart = () => {
                   <span className="join-item px-2 block">{item.quantity}</span>
                   <button
                     onClick={() => {
-                      // dispatch(increment());
+                      dispatch(
+                        addItemToCart({
+                          ...item,
+                          // quantity: item.quantity + 1,
+                        })
+                      );
                     }}
                     className="join-item btn btn-xs"
                   >
