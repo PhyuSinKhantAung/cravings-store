@@ -6,7 +6,9 @@ import {
 } from "@/lib/redux/features/cart/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
+import AmountDetails from "../check-out/AmountDetails";
 
 export const persistedState =
   typeof window !== "undefined" && localStorage.getItem("reduxState")!
@@ -56,15 +58,9 @@ const Cart = () => {
               </div>
               <div className="mx-10">
                 <div className="join">
-                  {/* <div>Quantity</div> */}
                   <button
                     onClick={() => {
-                      dispatch(
-                        removeItemFromCart({
-                          ...item,
-                          // quantity: item.quantity - 1,
-                        })
-                      );
+                      dispatch(removeItemFromCart(item));
                     }}
                     className="join-item btn btn-xs"
                   >
@@ -73,12 +69,7 @@ const Cart = () => {
                   <span className="join-item px-2 block">{item.quantity}</span>
                   <button
                     onClick={() => {
-                      dispatch(
-                        addItemToCart({
-                          ...item,
-                          // quantity: item.quantity + 1,
-                        })
-                      );
+                      dispatch(addItemToCart(item));
                     }}
                     className="join-item btn btn-xs"
                   >
@@ -90,16 +81,10 @@ const Cart = () => {
           </div>
         );
       })}
-      {cart.items.length !== 0 && (
-        <div>
-          <div className="bg-red-50 flex flex-col p-5 rounded-md text-sm gap-5 items-center">
-            <span>Subtotal - {cart.totalAmount} $</span>
-            <span>Delivery - 5 $</span>
-            <span> Total Amount - {cart.totalAmount + 5} $</span>
-          </div>
-          <button className="btn btn-primary w-full my-4">Check out</button>
-        </div>
-      )}
+      <AmountDetails />
+      <Link href={`/check-out`}>
+        <button className="btn btn-primary w-full my-4">Check Out</button>
+      </Link>
     </div>
   );
 };
