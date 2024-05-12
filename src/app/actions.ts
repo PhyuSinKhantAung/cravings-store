@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { SignupSchemaType } from "./validations/auth";
 import { AuthError } from "next-auth";
 import { signIn } from "../auth";
+import { CheckOutSchemaType } from "./validations/check-out";
 
 export const getUserByEmail = async (email: string) => {
   const user = await prisma.user.findUnique({
@@ -81,5 +82,43 @@ export async function authenticate(
       }
     }
     throw error;
+  }
+}
+
+type OrderPayload = {
+  userId: number;
+  quantity: number;
+  cost: number;
+  name: string;
+  address: string;
+};
+
+export async function placeOrder(
+  prevState: State | undefined,
+  formData: FormData
+) {
+  try {
+    const payload = {
+      ...Object.fromEntries(formData),
+    } as unknown as OrderPayload;
+
+    await prisma.order.create({
+      data: {
+        name: payload.name,
+        address: payload.address,
+        userId: Number(payload.userId),
+        quantity: Number(payload.quantity),
+        cost: Number(payload.cost),
+      },
+    });
+    return {
+      status: "success",
+      message: "Order created",
+    };
+  } catch (error) {
+    return {
+      status: "Fail",
+      message: "Order placing failed",
+    };
   }
 }

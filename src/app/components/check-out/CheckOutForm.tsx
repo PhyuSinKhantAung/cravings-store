@@ -4,12 +4,18 @@ import {
   checkoutSchema,
 } from "@/app/validations/check-out";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useFormStatus } from "react-dom";
+import React, { useEffect, useTransition } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { FieldErrors, UseFormRegister, useForm } from "react-hook-form";
 import AmountDetails from "./AmountDetails";
+import { placeOrder } from "@/app/actions";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { User } from "next-auth";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { removeAllItems } from "@/lib/redux/features/cart/cart.slice";
 
-const CheekOutForm = () => {
+const CheekOutForm = ({ user }: { user: null | User }) => {
   const {
     register,
     formState: { errors, isValid },
@@ -17,8 +23,44 @@ const CheekOutForm = () => {
     resolver: zodResolver(checkoutSchema),
     mode: "all",
   });
+  const cart = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
+  const [state, formAction] = useFormState(placeOrder, undefined);
+
+  const [pending, startTransaction] = useTransition();
+
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+    if (state.status === "success") {
+      toast.success("Created orders successfully");
+
+      dispatch(removeAllItems());
+
+      localStorage.removeItem("reduxState");
+
+      redirect("/orders");
+    }
+    if (state.status === "error") {
+      toast.error(`${state.message}`);
+    }
+  }, [dispatch, state]);
   return (
-    <form className="md:flex items-end md:gap-x-4 md:max-w-6xl md:mx-auto my-6">
+    <form
+      action={(formData) => {
+        startTransaction(async () => {
+          if (isValid) {
+            formData.append("userId", user?.id?.toString()!);
+            formData.append("quantity", cart.totalQuantity.toString());
+            formData.append("cost", cart.totalAmount.toString());
+            formAction(formData);
+          }
+        });
+      }}
+      className="md:flex items-end md:gap-x-4 md:max-w-6xl md:mx-auto my-6"
+    >
       <div className="md:w-1/2">
         <FormContent register={register} errors={errors}></FormContent>
       </div>

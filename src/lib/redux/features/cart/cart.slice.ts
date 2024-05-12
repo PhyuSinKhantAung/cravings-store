@@ -64,12 +64,22 @@ const cartSlice = createSlice({
       state.totalAmount = state.totalAmount - removeItem.price;
 
       if (state.items.length === 0) {
+        state.items = [];
+        state.totalAmount = 0;
+        state.totalQuantity = 0;
         localStorage.removeItem("reduxState");
       }
+    },
+
+    removeAllItems(state) {
+      state.items = [];
+      state.totalAmount = 0;
+      state.totalQuantity = 0;
     },
   },
 });
 
-export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, removeAllItems } =
+  cartSlice.actions;
 
 export default cartSlice;
