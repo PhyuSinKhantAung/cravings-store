@@ -59,9 +59,12 @@ const Navbar = ({ user }: { user: User | null }) => {
                     key={link.href}
                     className={`${
                       link.href === pathname && "text-primary font-semibold"
-                    }`}
+                    } focus:text-primary`}
                   >
-                    <Link href={link.href} className=" capitalize">
+                    <Link
+                      href={link.href}
+                      className="focus:bg-primary capitalize"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -76,7 +79,10 @@ const Navbar = ({ user }: { user: User | null }) => {
                         link.href === pathname && "text-secondary font-semibold"
                       }`}
                     >
-                      <Link href={link.href} className=" capitalize">
+                      <Link
+                        href={link.href}
+                        className="focus:bg-primary focus:text-secondary capitalize"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -103,7 +109,10 @@ const Navbar = ({ user }: { user: User | null }) => {
                     link.href === pathname && "text-secondary font-semibold"
                   }`}
                 >
-                  <Link href={link.href} className=" capitalize">
+                  <Link
+                    href={link.href}
+                    className="focus:bg-primary focus:text-secondary capitalize"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -118,7 +127,10 @@ const Navbar = ({ user }: { user: User | null }) => {
                       link.href === pathname && "text-secondary font-semibold"
                     }`}
                   >
-                    <Link href={link.href} className=" capitalize">
+                    <Link
+                      href={link.href}
+                      className="focus:bg-primary focus:text-secondary capitalize"
+                    >
                       {link.label}
                     </Link>
                   </li>
