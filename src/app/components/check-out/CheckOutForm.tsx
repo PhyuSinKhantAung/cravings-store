@@ -43,7 +43,7 @@ const CheekOutForm = ({ user }: { user: null | User }) => {
 
       redirect("/orders");
     }
-    if (state.status === "error") {
+    if (state.status === "fail") {
       toast.error(`${state.message}`);
     }
   }, [dispatch, state]);

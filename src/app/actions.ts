@@ -117,7 +117,7 @@ export async function placeOrder(
     };
   } catch (error) {
     return {
-      status: "Fail",
+      status: "fail",
       message: "Order placing failed",
     };
   }
