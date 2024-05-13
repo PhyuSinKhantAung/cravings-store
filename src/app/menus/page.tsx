@@ -23,7 +23,7 @@ const MenusPage = async ({ searchParams }: { searchParams: SearchParams }) => {
     <div className="w-full my-5 lg:flex lg:gap-x-5">
       <div className="lg:w-1/6 my-6 flex flex-col gap-y-3">
         <SearchInput />
-        <Dropdown>
+        <Dropdown categoryId={query.category}>
           <CategoriesList />
         </Dropdown>
         <Tabs>

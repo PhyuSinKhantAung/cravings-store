@@ -1,10 +1,21 @@
-"use client";
 import React from "react";
+import { fetchCategories } from "../category/CategoriesList";
+import { Category } from "@prisma/client";
 
-const Dropdown = ({ children }: React.PropsWithChildren) => {
+type Props = {
+  categoryId: string;
+  children: React.ReactNode;
+};
+
+const Dropdown = async ({ categoryId, children }: Props) => {
+  const { data } = await fetchCategories();
+  const category = data.find(
+    (item: Category) => item.id === Number(categoryId)
+  );
+
   return (
-    <details className="dropdown lg:hidden">
-      <summary className="m-1 btn">
+    <div className="dropdown lg:hidden">
+      <div className="m-1 btn" tabIndex={1} role="button">
         {" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,12 +31,15 @@ const Dropdown = ({ children }: React.PropsWithChildren) => {
         >
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
         </svg>
-        Category
-      </summary>
-      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+        <div>{category?.name || "Category"}</div>
+      </div>
+      <ul
+        tabIndex={1}
+        className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52"
+      >
         {children}
       </ul>
-    </details>
+    </div>
   );
 };
 

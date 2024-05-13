@@ -24,7 +24,7 @@ const CategoriesList = async () => {
         <CategoryTag category={all} />
       </li>
       {data.map((item: Category) => (
-        <li key={item.id} className="lg:list-none ">
+        <li key={item.id} className="lg:list-none">
           <CategoryTag category={item} />
         </li>
       ))}

@@ -59,11 +59,11 @@ const Navbar = ({ user }: { user: User | null }) => {
                     key={link.href}
                     className={`${
                       link.href === pathname && "text-primary font-semibold"
-                    } focus:text-primary`}
+                    }`}
                   >
                     <Link
                       href={link.href}
-                      className="focus:bg-primary capitalize"
+                      className="focus:bg-base-100 focus:text-primary capitalize"
                     >
                       {link.label}
                     </Link>
@@ -76,12 +76,12 @@ const Navbar = ({ user }: { user: User | null }) => {
                     <li
                       key={link.href}
                       className={`${
-                        link.href === pathname && "text-secondary font-semibold"
+                        link.href === pathname && "text-primary font-semibold"
                       }`}
                     >
                       <Link
                         href={link.href}
-                        className="focus:bg-primary focus:text-secondary capitalize"
+                        className="focus:bg-base-100 focus:text-primary capitalize"
                       >
                         {link.label}
                       </Link>
