@@ -47,9 +47,12 @@ const CheekOutForm = ({ user }: { user: null | User }) => {
       toast.error(`${state.message}`);
     }
   }, [dispatch, state]);
+
   return (
     <form
       action={(formData) => {
+        if (!user) return redirect("/login");
+
         startTransaction(async () => {
           if (isValid) {
             formData.append("userId", user?.id?.toString()!);

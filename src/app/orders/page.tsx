@@ -2,9 +2,14 @@ import prisma from "@/lib/prisma";
 import generateTextColorByOrderStatus from "@/utils/generateTextColorByOrderStatus";
 import React from "react";
 import dayjs from "dayjs";
+import { auth } from "@/auth";
+import Image from "next/image";
 
-export const fetchOrders = async () => {
+export const fetchOrders = async (query: { userId: number }) => {
   const orders = await prisma.order.findMany({
+    where: {
+      userId: query.userId,
+    },
     orderBy: {
       createdAt: "desc",
     },
@@ -17,10 +22,17 @@ export const fetchOrders = async () => {
 };
 
 const OrdersPage = async () => {
-  const { data } = await fetchOrders();
+  const session = await auth();
+  const userId = session?.user?.id!;
+  const { data } = await fetchOrders({ userId: Number(userId) });
 
   return (
     <div className="my-5 md:max-w-xl mx-auto">
+      <div className="my-8">
+        <h1 className="text-4xl text-prose font-semibold">Orders</h1>
+        <div className="w-12 h-1 bg-accent"></div>
+      </div>
+
       {data.map((item) => (
         <div
           className="card bg-base-100 shadow-lg hover:shadow-2xl mb-5 cursor-pointer"
@@ -44,6 +56,13 @@ const OrdersPage = async () => {
           </div>
         </div>
       ))}
+
+      {data.length === 0 && (
+        <div className="flex flex-col justify-center items-center gap-6 my-40">
+          <Image src="/empty-data.svg" width={200} height={200} alt=""></Image>
+          <span>You have not ordered yet.</span>
+        </div>
+      )}
     </div>
   );
 };

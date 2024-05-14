@@ -14,10 +14,7 @@ const homeLinks = [
   { href: "/cart", label: "cart" },
 ];
 
-const additionalLinks = [
-  { href: "/check-out", label: "checkout" },
-  { href: "/orders", label: "orders" },
-];
+const additionalLinks = [{ href: "/orders", label: "orders" }];
 
 const Navbar = ({ user }: { user: User | null }) => {
   const pathname = usePathname();
