@@ -1,11 +1,9 @@
 import React from "react";
 import MenusList from "../components/menus/MenusList";
 import SearchInput from "../components/ui/SearchInput";
-import Dropdown from "../components/ui/Dropdown";
 import CategoriesList, {
   fetchCategories,
 } from "../components/category/CategoriesList";
-import Tabs from "../components/ui/Tabs";
 import { Category } from "@prisma/client";
 
 type SearchParams = {

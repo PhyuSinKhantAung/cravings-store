@@ -1,8 +1,6 @@
 import prisma from "@/lib/prisma";
 import React from "react";
 import CategoryTag from "./CategoryTag";
-import Select from "../ui/Select";
-import Tabs from "../ui/Tabs";
 import CategorySelect from "./CategorySelect";
 
 export const fetchCategories = async () => {

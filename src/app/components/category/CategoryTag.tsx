@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { boolean } from "zod";
 import Tabs from "../ui/Tabs";
 
 const checkCurrentPageIsActivePage = (
