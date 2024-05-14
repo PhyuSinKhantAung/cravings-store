@@ -2,52 +2,63 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { boolean } from "zod";
+import Tabs from "../ui/Tabs";
 
 const checkCurrentPageIsActivePage = (
-  categoryId: number,
-  searchParamsCategoryId: string | null
+  categoryName: string,
+  searchParamsCategoryName: string | null
 ) => {
-  if (categoryId.toString() === searchParamsCategoryId) {
-    if (categoryId === 0 || !categoryId) return true;
+  if (!searchParamsCategoryName && categoryName === "All") return true;
+
+  if (categoryName === searchParamsCategoryName) {
     return true;
   } else {
     return false;
   }
 };
 
-const CategoryTag = ({ category }: { category: Category }) => {
+const CategoryTag = ({ categories }: { categories: Category[] }) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-  const [categoryId, setCategoryId] = useState(searchParams.get("category"));
+  const [categoryName, setCategoryName] = useState(
+    searchParams.get("category")
+  );
 
-  const handleMenusByCategory = (categoryId: number) => {
+  const handleMenusByCategory = (categoryName: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("category", categoryId.toString());
+    params.set("category", categoryName);
 
     replace(`${pathname}?${params.toString()}`);
   };
 
   useEffect(() => {
-    setCategoryId(
-      searchParams.get("category") ? searchParams.get("category") : "0"
+    setCategoryName(
+      searchParams.get("category") ? searchParams.get("category") : "All"
     );
   }, [searchParams]);
 
   return (
-    <a
-      className={`lg:tab lg:text-xs ${
-        checkCurrentPageIsActivePage(category.id, categoryId) &&
-        "tab-active font-bold"
-      }`}
-      onClick={() => {
-        handleMenusByCategory(category.id);
-      }}
-      key={category.id}
-    >
-      {category.name}
-    </a>
+    <Tabs>
+      {categories.map((item: Category) => (
+        <li key={item.id} className="lg:list-none">
+          <a
+            className={`lg:tab lg:text-xs ${
+              checkCurrentPageIsActivePage(item.name, categoryName) &&
+              "tab-active font-bold"
+            }`}
+            onClick={() => {
+              handleMenusByCategory(item.name);
+            }}
+            key={item.id}
+          >
+            {item.name}
+          </a>
+        </li>
+      ))}
+    </Tabs>
   );
 };
 

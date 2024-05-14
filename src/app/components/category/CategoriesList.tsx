@@ -1,7 +1,9 @@
 import prisma from "@/lib/prisma";
 import React from "react";
 import CategoryTag from "./CategoryTag";
-import { Category } from "@prisma/client";
+import Select from "../ui/Select";
+import Tabs from "../ui/Tabs";
+import CategorySelect from "./CategorySelect";
 
 export const fetchCategories = async () => {
   const categories = await prisma.category.findMany();
@@ -13,21 +15,18 @@ export const fetchCategories = async () => {
 const CategoriesList = async () => {
   const { data } = await fetchCategories();
 
-  const all = {
-    id: 0,
-    name: "All",
-  };
+  const categories = [{ id: 0, name: "All" }, ...data];
 
   return (
     <>
-      <li className="lg:list-none">
-        <CategoryTag category={all} />
-      </li>
-      {data.map((item: Category) => (
-        <li key={item.id} className="lg:list-none">
-          <CategoryTag category={item} />
-        </li>
-      ))}
+      <div className="lg:hidden">
+        <CategorySelect categories={categories} />
+      </div>
+
+      <div className="hidden lg:block">
+        {/* For desktop */}
+        <CategoryTag categories={categories} />
+      </div>
     </>
   );
 };

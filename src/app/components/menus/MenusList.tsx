@@ -8,7 +8,7 @@ type GetMenuQuery = {
   page?: string | undefined;
   limit?: string | undefined;
   search?: string | undefined;
-  category?: string | undefined;
+  category?: number | undefined;
 };
 
 export async function fetchMenus(rawQuery: GetMenuQuery) {
