@@ -8,8 +8,12 @@ type Props = {
 
 const Select = ({ children, label, onChange }: Props) => {
   return (
-    <select className="select bg-neutral-200  max-w-sm" onChange={onChange}>
-      <option disabled selected className="hidden">
+    <select
+      defaultValue={"All"}
+      className="select bg-neutral-200  max-w-sm"
+      onChange={onChange}
+    >
+      <option disabled className="hidden">
         {label}
       </option>
       {children}

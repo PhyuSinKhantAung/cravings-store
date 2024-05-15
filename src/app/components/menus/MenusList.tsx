@@ -54,6 +54,9 @@ const MenusList = async ({ query }: { query: GetMenuQuery }) => {
 
   return (
     <div>
+      {data.length === 0 && (
+        <span className="loading loading-ring loading-lg"></span>
+      )}
       <div className="grid gap-2 lg:grid-cols-3 lg:gap-5 md:grid-cols-2">
         {data.map((menu: Menu) => (
           <MenuCard item={menu} key={menu.id} />
