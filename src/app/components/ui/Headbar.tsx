@@ -9,7 +9,6 @@ import checkAuthPage from "@/utils/checkAuthPage";
 const Headbar = ({ user }: { user: User | null }) => {
   const pathname = usePathname();
 
-  console.log({ user });
   if (checkAuthPage(pathname)) {
     return null;
   } else

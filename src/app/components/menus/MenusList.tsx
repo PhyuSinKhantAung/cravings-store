@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { Menu, Prisma } from "@prisma/client";
 import MenuCard from "../ui/MenuCard";
 import Pagination from "../ui/Pagination";
+import MenuCardLayout from "./MenuCardLayout";
 
 type GetMenuQuery = {
   page?: string | undefined;
@@ -54,14 +55,11 @@ const MenusList = async ({ query }: { query: GetMenuQuery }) => {
 
   return (
     <div>
-      {data.length === 0 && (
-        <span className="loading loading-ring loading-lg"></span>
-      )}
-      <div className="grid gap-2 lg:grid-cols-3 lg:gap-5 md:grid-cols-2">
+      <MenuCardLayout>
         {data.map((menu: Menu) => (
           <MenuCard item={menu} key={menu.id} />
         ))}
-      </div>
+      </MenuCardLayout>
       <div className="flex justify-center my-2">
         <Pagination data={pagination} />
       </div>

@@ -5,6 +5,7 @@ import CategorySelect from "./CategorySelect";
 
 export const fetchCategories = async () => {
   const categories = await prisma.category.findMany();
+
   return {
     data: categories,
   };

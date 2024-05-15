@@ -9,7 +9,6 @@ export const getSingleMenuById = async (menuId: number) => {
     },
   });
 
-  console.log({ menu });
   return menu;
 };
 

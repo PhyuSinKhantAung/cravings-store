@@ -43,7 +43,6 @@ export const { auth, signIn, signOut } = NextAuth({
         session.user.id = token.id;
         session.user.email = token.email;
       }
-      console.log({ session });
       return session;
     },
     async redirect({ url, baseUrl }: any) {
