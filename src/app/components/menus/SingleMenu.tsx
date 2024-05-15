@@ -3,6 +3,7 @@ import { addItemToCart } from "@/lib/redux/features/cart/cart.slice";
 import {
   decrement,
   increment,
+  resetCountValue,
 } from "@/lib/redux/features/counter/counter.slice";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/redux/hooks";
 import { Menu } from "@prisma/client";
@@ -29,6 +30,8 @@ const SingleMenu = ({ menu }: { menu: Menu }) => {
     };
 
     dispatch(addItemToCart(cartItem));
+
+    dispatch(resetCountValue());
 
     toast.success("Menu is added");
   };
