@@ -4,6 +4,8 @@ import React from "react";
 import dayjs from "dayjs";
 import { auth } from "@/auth";
 import Image from "next/image";
+import Link from "next/link";
+import Card from "../components/ui/Card";
 
 export const fetchOrders = async (query: { userId: number }) => {
   const orders = await prisma.order.findMany({
@@ -34,27 +36,28 @@ const OrdersPage = async () => {
       </div>
 
       {data.map((item) => (
-        <div
-          className="card bg-base-100 shadow-lg hover:shadow-2xl mb-5 cursor-pointer"
-          key={item.id}
-        >
-          <div className="card-body grid grid-cols-2 p-4 text-sm">
-            <div className="flex flex-col gap-y-4">
-              <span>Date</span>
-              <span>Status</span>
-              <span>Cost</span>
+        <Link key={item.id} href={`/orders/${item.id}`}>
+          <Card>
+            <div className="grid grid-cols-2 text-sm">
+              <div className="flex flex-col gap-y-4">
+                <span>Date</span>
+                <span>Status</span>
+                <span>Cost</span>
+              </div>
+              <div className="flex flex-col gap-y-4">
+                <span>
+                  {dayjs(item.createdAt).format("MMMM D YYYY, h:mm A")}
+                </span>
+                <span
+                  className={`${generateTextColorByOrderStatus(item.status)}`}
+                >
+                  {item.status}
+                </span>
+                <span>{item.cost} $</span>
+              </div>
             </div>
-            <div className="flex flex-col gap-y-4">
-              <span>{dayjs(item.createdAt).format("MMMM D YYYY, h:mm A")}</span>
-              <span
-                className={`${generateTextColorByOrderStatus(item.status)}`}
-              >
-                {item.status}
-              </span>
-              <span>{item.cost} $</span>
-            </div>
-          </div>
-        </div>
+          </Card>
+        </Link>
       ))}
 
       {data.length === 0 && (
