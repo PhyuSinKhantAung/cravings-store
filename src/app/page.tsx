@@ -22,11 +22,6 @@ export const bestSellerBurgers = [
 ];
 
 const HomePage = async () => {
-  const session = await auth();
-
-  if (!session?.user) {
-    console.log({ session }, "~~~~");
-  }
   return (
     <div className="xl:px-10 ">
       <div className="xl:max-w-screen-4xl max-w-full">

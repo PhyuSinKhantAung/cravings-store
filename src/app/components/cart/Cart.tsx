@@ -19,12 +19,6 @@ export const persistedState =
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
 
-  console.log({
-    cartItems: cart.items,
-    totalAmount: cart.totalAmount,
-    totalQuantity: cart.totalQuantity,
-  });
-
   const dispatch = useAppDispatch();
 
   return (
