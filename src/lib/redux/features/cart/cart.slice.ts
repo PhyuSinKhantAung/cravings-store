@@ -31,14 +31,13 @@ const cartSlice = createSlice({
       const newItem = action.payload;
       const existingItem = stateItems.find((item) => item.id === newItem.id);
 
-      state.totalQuantity++;
-
       if (existingItem) {
         existingItem.quantity++;
         existingItem.totalPrice = existingItem.price * existingItem.quantity;
       } else {
         newItem.totalPrice = newItem.price * newItem.quantity;
         stateItems.push(newItem);
+        state.totalQuantity++;
       }
 
       state.totalAmount = state.items.reduce((accumulator, item) => {

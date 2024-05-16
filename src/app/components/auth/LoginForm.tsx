@@ -90,7 +90,17 @@ export const FormContent = ({
               <span className="loading loading-ring loading-sm"></span>
             )}
           </button>
-          <button className="btn btn-neutral w-full">Guest user</button>
+          <button
+            className="btn btn-neutral w-full"
+            onClick={() => {
+              const formdata = new FormData();
+              formdata.append("email", "testing@gmail.com");
+              formdata.append("password", "123456");
+              authenticate(undefined, formdata);
+            }}
+          >
+            Guest user
+          </button>
         </div>
         <div className="flex justify-center gap-x-2 text-sm">
           <span>Not a member yet?</span>

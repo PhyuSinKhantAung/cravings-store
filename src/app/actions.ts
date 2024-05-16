@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import { SignupSchemaType } from "./validations/auth";
 import { AuthError } from "next-auth";
 import { signIn } from "../auth";
-import { CheckOutSchemaType } from "./validations/check-out";
 
 export const getUserByEmail = async (email: string) => {
   const user = await prisma.user.findUnique({

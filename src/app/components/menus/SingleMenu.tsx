@@ -8,11 +8,13 @@ import {
 import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/redux/hooks";
 import { Menu } from "@prisma/client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 const SingleMenu = ({ menu }: { menu: Menu }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const count = useAppSelector((state) => {
     return state.counter.value;
   });
@@ -32,6 +34,8 @@ const SingleMenu = ({ menu }: { menu: Menu }) => {
     dispatch(addItemToCart(cartItem));
 
     dispatch(resetCountValue());
+
+    router.back();
 
     toast.success("Menu is added");
   };

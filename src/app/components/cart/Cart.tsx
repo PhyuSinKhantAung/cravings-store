@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import AmountDetails from "../check-out/AmountDetails";
+import { redirect } from "next/navigation";
 
 export const persistedState =
   typeof window !== "undefined" && localStorage.getItem("reduxState")!
